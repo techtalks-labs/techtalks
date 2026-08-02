@@ -9,6 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@repo/ui": "workspace:*",
     "@tailwindcss/vite": "^4.3.3",
     "better-auth": "^1.6.25",
     "class-variance-authority": "^0.7.1",
