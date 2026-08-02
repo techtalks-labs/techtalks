@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { Button } from "@/components/ui/button";
+import { Button } from "@repo/ui/button";
 import { AppShell } from "@/components/AppShell";
 import { authClient } from "../lib/auth-client";
 
