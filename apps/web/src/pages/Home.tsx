@@ -71,9 +71,7 @@ export function Home() {
         <p className="mt-1 text-sm text-muted-foreground">Live read from Postgres via Express.</p>
 
         {itemsError ? <p className="auth-error">Error: {itemsError}</p> : null}
-        {items === null && !itemsError ? (
-          <p className="items-empty mt-4">Loading items…</p>
-        ) : null}
+        {items === null && !itemsError ? <p className="items-empty mt-4">Loading items…</p> : null}
         {items && items.length === 0 ? (
           <p className="items-empty mt-4">No items yet — the wire-up works.</p>
         ) : null}

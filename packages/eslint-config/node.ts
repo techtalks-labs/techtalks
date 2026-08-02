@@ -1,7 +1,6 @@
 import globals from "globals";
-import { baseConfig } from "./base.js";
+import { baseConfig } from "./base";
 
-/** @type {import("eslint").Linter.Config[]} */
 export default [
   ...baseConfig,
   {
