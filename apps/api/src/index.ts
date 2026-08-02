@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import { toNodeHandler } from "better-auth/node";
 import { listItems } from "@repo/db";
-import { auth } from "./auth.js";
+import { auth } from "./auth";
 
 const app = express();
 const port = Number(process.env.PORT) || 3001;

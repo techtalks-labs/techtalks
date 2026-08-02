@@ -1,9 +1,8 @@
 import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import { baseConfig } from "./base.js";
+import { baseConfig } from "./base";
 
-/** @type {import("eslint").Linter.Config[]} */
 export default [
   ...baseConfig,
   {
