@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
+import { AppShell } from "@/components/AppShell";
 import { authClient } from "../lib/auth-client";
 
 type Item = {
@@ -35,33 +36,60 @@ export function Home() {
   }
 
   return (
-    <main className="p-6 space-y-4">
-      <h1 className="text-2xl font-semibold">Home</h1>
-      {isPending ? <p>Loading session…</p> : null}
-      {session?.user ? (
-        <div className="space-y-2">
-          <p>Signed in as {session.user.email}</p>
-          <Button type="button" variant="outline" onClick={signOut}>
-            Sign out
-          </Button>
-        </div>
-      ) : (
-        <div className="flex gap-2">
-          <Button asChild>
-            <Link to="/sign-in">Sign in</Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link to="/sign-up">Sign up</Link>
-          </Button>
-        </div>
-      )}
+    <AppShell>
+      <p className="app-lede">
+        Short talks. Real builders. One place for the conversations that move tech forward.
+      </p>
 
-      <section className="space-y-2">
-        <h2 className="text-lg font-medium">Items from API</h2>
-        {itemsError ? <p>Error: {itemsError}</p> : null}
-        {items === null && !itemsError ? <p>Loading items…</p> : null}
-        {items ? <pre>{JSON.stringify(items, null, 2)}</pre> : null}
+      <div className="mt-6 flex flex-wrap items-center gap-2">
+        {isPending ? <p className="text-sm text-muted-foreground">Checking session…</p> : null}
+        {session?.user ? (
+          <>
+            <p className="text-sm text-muted-foreground mr-2">
+              Signed in as <span className="font-medium text-foreground">{session.user.email}</span>
+            </p>
+            <Button type="button" variant="outline" onClick={signOut}>
+              Sign out
+            </Button>
+          </>
+        ) : !isPending ? (
+          <>
+            <Button asChild>
+              <Link to="/sign-in">Sign in</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link to="/sign-up">Sign up</Link>
+            </Button>
+          </>
+        ) : null}
+      </div>
+
+      <section className="surface" aria-labelledby="items-heading">
+        <h2 id="items-heading" className="font-display text-lg font-semibold tracking-tight">
+          Latest from the API
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">Live read from Postgres via Express.</p>
+
+        {itemsError ? <p className="auth-error">Error: {itemsError}</p> : null}
+        {items === null && !itemsError ? (
+          <p className="items-empty mt-4">Loading items…</p>
+        ) : null}
+        {items && items.length === 0 ? (
+          <p className="items-empty mt-4">No items yet — the wire-up works.</p>
+        ) : null}
+        {items && items.length > 0 ? (
+          <ul className="items-list mt-4">
+            {items.map((item) => (
+              <li key={item.id}>
+                <span className="font-medium">{item.name}</span>
+                <time className="text-muted-foreground text-sm">
+                  {new Date(item.createdAt).toLocaleDateString()}
+                </time>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </section>
-    </main>
+    </AppShell>
   );
 }

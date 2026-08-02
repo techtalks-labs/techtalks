@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
+import { AppShell } from "@/components/AppShell";
 import { authClient } from "../lib/auth-client";
 
 export function SignUp() {
@@ -25,27 +27,39 @@ export function SignUp() {
   }
 
   return (
-    <main>
-      <h1>Sign up</h1>
-      <form onSubmit={onSubmit}>
+    <AppShell>
+      <h1 className="font-display text-3xl font-semibold tracking-tight">Join Tech Talks</h1>
+      <p className="app-lede">Create an account and get into the room.</p>
+
+      <form className="auth-form" onSubmit={onSubmit}>
         <label>
           Name
-          <input name="name" type="text" required />
+          <input name="name" type="text" autoComplete="name" required />
         </label>
         <label>
           Email
-          <input name="email" type="email" required />
+          <input name="email" type="email" autoComplete="email" required />
         </label>
         <label>
           Password
-          <input name="password" type="password" required minLength={8} />
+          <input
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            required
+            minLength={8}
+          />
         </label>
-        <button type="submit">Create account</button>
+        <Button type="submit" className="w-full sm:w-auto">
+          Create account
+        </Button>
       </form>
-      {error ? <p>{error}</p> : null}
-      <p>
+
+      {error ? <p className="auth-error">{error}</p> : null}
+
+      <p className="auth-switch">
         Already have an account? <Link to="/sign-in">Sign in</Link>
       </p>
-    </main>
+    </AppShell>
   );
 }

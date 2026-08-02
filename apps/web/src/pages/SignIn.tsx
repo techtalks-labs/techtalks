@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
+import { AppShell } from "@/components/AppShell";
 import { authClient } from "../lib/auth-client";
 
 export function SignIn() {
@@ -24,23 +26,29 @@ export function SignIn() {
   }
 
   return (
-    <main>
-      <h1>Sign in</h1>
-      <form onSubmit={onSubmit}>
+    <AppShell>
+      <h1 className="font-display text-3xl font-semibold tracking-tight">Welcome back</h1>
+      <p className="app-lede">Sign in to pick up where you left off.</p>
+
+      <form className="auth-form" onSubmit={onSubmit}>
         <label>
           Email
-          <input name="email" type="email" required />
+          <input name="email" type="email" autoComplete="email" required />
         </label>
         <label>
           Password
-          <input name="password" type="password" required />
+          <input name="password" type="password" autoComplete="current-password" required />
         </label>
-        <button type="submit">Sign in</button>
+        <Button type="submit" className="w-full sm:w-auto">
+          Sign in
+        </Button>
       </form>
-      {error ? <p>{error}</p> : null}
-      <p>
+
+      {error ? <p className="auth-error">{error}</p> : null}
+
+      <p className="auth-switch">
         Need an account? <Link to="/sign-up">Sign up</Link>
       </p>
-    </main>
+    </AppShell>
   );
 }
