@@ -1,8 +1,8 @@
 import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
-import * as authSchema from "./auth-schema.js";
-import { items } from "./schema.js";
+import * as authSchema from "./auth-schema";
+import { items } from "./schema";
 
 config({ path: "../../.env" });
 
@@ -22,4 +22,4 @@ export async function listItems() {
 }
 
 export { items };
-export * from "./auth-schema.js";
+export * from "./auth-schema";
