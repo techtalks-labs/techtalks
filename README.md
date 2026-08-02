@@ -4,14 +4,14 @@ Turborepo monorepo for Tech Talks: Express API, React web app, shared Drizzle/Po
 
 ## Stack
 
-| Layer | Tech |
-| --- | --- |
-| Monorepo | pnpm workspaces + Turborepo |
-| API | Express + TypeScript |
-| Web | Vite + React + React Router + Tailwind + shadcn/ui |
-| Database | PostgreSQL + Drizzle ORM |
-| Auth | Better Auth (email / password) |
-| Tooling | shared ESLint + TypeScript configs, Husky pre-push, GitHub Actions |
+| Layer    | Tech                                                               |
+| -------- | ------------------------------------------------------------------ |
+| Monorepo | pnpm workspaces + Turborepo                                        |
+| API      | Express + TypeScript                                               |
+| Web      | Vite + React + React Router + Tailwind + shadcn/ui                 |
+| Database | PostgreSQL + Drizzle ORM                                           |
+| Auth     | Better Auth (email / password)                                     |
+| Tooling  | shared ESLint + TypeScript configs, Husky pre-push, GitHub Actions |
 
 ## Repo layout
 
@@ -54,8 +54,8 @@ pnpm --filter @repo/db db:migrate
 pnpm dev
 ```
 
-| App | URL |
-| --- | --- |
+| App | URL                   |
+| --- | --------------------- |
 | Web | http://localhost:5173 |
 | API | http://localhost:3001 |
 
@@ -69,12 +69,14 @@ Useful API routes:
 
 From the repo root:
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Start all `dev` tasks (API + web) |
-| `pnpm build` | Production builds |
-| `pnpm lint` | ESLint across packages |
-| `pnpm check` | TypeScript check (`tsc --noEmit`) |
+| Command             | What it does                      |
+| ------------------- | --------------------------------- |
+| `pnpm dev`          | Start all `dev` tasks (API + web) |
+| `pnpm build`        | Production builds                 |
+| `pnpm lint`         | ESLint across packages            |
+| `pnpm check`        | TypeScript check (`tsc --noEmit`) |
+| `pnpm format`       | Format with Prettier              |
+| `pnpm format:check` | Check Prettier formatting         |
 
 Package-specific examples:
 
@@ -87,11 +89,11 @@ pnpm --filter @repo/db db:migrate
 
 ## Environment
 
-| Variable | Purpose |
-| --- | --- |
-| `DATABASE_URL` | Postgres connection string |
-| `BETTER_AUTH_SECRET` | Auth signing secret (≥ 32 chars) |
-| `BETTER_AUTH_URL` | Public auth base URL (`http://localhost:3001` locally) |
+| Variable             | Purpose                                                |
+| -------------------- | ------------------------------------------------------ |
+| `DATABASE_URL`       | Postgres connection string                             |
+| `BETTER_AUTH_SECRET` | Auth signing secret (≥ 32 chars)                       |
+| `BETTER_AUTH_URL`    | Public auth base URL (`http://localhost:3001` locally) |
 
 Default Docker DB (from `docker-compose.yml`):
 
@@ -114,8 +116,11 @@ postgresql://postgres:postgres@localhost:5432/monorepo
 
 ## Quality gates
 
+- **Pre-commit (Husky):** Prettier on staged files (`lint-staged`)
+- **Commit message (Husky):** [Conventional Commits](https://www.conventionalcommits.org/) via commitlint  
+  Examples: `feat: add talk list`, `fix(api): handle missing db`, `chore: bump deps`
 - **Pre-push (Husky):** `pnpm lint && pnpm check && pnpm build`
-- **CI (GitHub Actions):** install → lint → typecheck → build on `push` / `pull_request`
+- **CI (GitHub Actions):** install → format check → lint → typecheck → build
 
 ## Notes
 
