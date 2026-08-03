@@ -174,7 +174,7 @@ pnpm --filter @repo/db db:migrate
 Default Docker DB (from `docker-compose.yml`):
 
 ```text
-postgresql://postgres:postgres@localhost:5432/monorepo
+postgresql://postgres:postgres@localhost:5432/techtalks
 ```
 
 ## Auth
