@@ -141,22 +141,44 @@ Fix failures before committing. CI runs the same checks on GitHub.
 
 ### 6. Commit the change
 
-Use a short [Conventional Commit](https://www.conventionalcommits.org/) message:
+Use this format:
 
-```bash
-git commit -m "feat: add talk submission form"
+```text
+type(optional-scope): short description
 ```
 
-Common prefixes:
+The scope is optional. Use it when it makes the affected area clearer:
 
-| Prefix      | Use it for              | Example                                  |
-| ----------- | ----------------------- | ---------------------------------------- |
-| `feat:`     | New functionality       | `feat: add speaker profile`              |
-| `fix:`      | Bug fix                 | `fix: handle expired session`            |
-| `docs:`     | Documentation           | `docs: explain database setup`           |
-| `test:`     | Automated tests         | `test: cover sign-in failures`           |
-| `refactor:` | Internal restructuring  | `refactor: centralize API configuration` |
-| `chore:`    | Tooling and maintenance | `chore: update lint configuration`       |
+```text
+feat(web): add talk submission form
+fix(auth): handle expired session
+docs: explain database setup
+test(api): cover invalid requests
+chore(config): update CI workflow
+```
+
+Use one of these five types:
+
+| Type    | Use it for                                           |
+| ------- | ---------------------------------------------------- |
+| `feat`  | New functionality                                    |
+| `fix`   | Bug fixes and performance improvements               |
+| `docs`  | Documentation only                                   |
+| `test`  | Adding or changing automated tests                   |
+| `chore` | Dependencies, builds, CI, formatting, or maintenance |
+
+Guidelines:
+
+- Start the description with an action such as `add`, `fix`, `update`, or `remove`.
+- Keep the complete first line at 72 characters or fewer.
+- Do not end the description with a period.
+- Keep each commit focused on one logical change.
+
+Create the commit with:
+
+```bash
+git commit -m "feat(web): add talk submission form"
+```
 
 Good commits are small, focused, and understandable on their own.
 
