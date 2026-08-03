@@ -3,13 +3,13 @@ import express from "express";
 import { toNodeHandler } from "better-auth/node";
 import { listItems } from "@repo/db";
 import { auth } from "./auth";
+import { env } from "./env";
 
 const app = express();
-const port = Number(process.env.PORT) || 3001;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: env.webOrigin,
     credentials: true,
   }),
 );
@@ -27,6 +27,6 @@ app.get("/items", async (_req, res) => {
   res.json(rows);
 });
 
-app.listen(port, () => {
-  console.log(`API listening on http://localhost:${port}`);
+app.listen(env.port, () => {
+  console.log(`API listening on port ${env.port}`);
 });
