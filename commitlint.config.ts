@@ -1,6 +1,7 @@
 export default {
   extends: ["@commitlint/config-conventional"],
   rules: {
+    "body-max-line-length": [0, "always", 100],
     "header-max-length": [2, "always", 72],
     "subject-empty": [2, "never"],
     "subject-full-stop": [2, "never", "."],
