@@ -162,11 +162,14 @@ pnpm --filter @repo/db db:migrate
 
 ## Environment
 
-| Variable             | Purpose                                                |
-| -------------------- | ------------------------------------------------------ |
-| `DATABASE_URL`       | Postgres connection string                             |
-| `BETTER_AUTH_SECRET` | Auth signing secret (≥ 32 chars)                       |
-| `BETTER_AUTH_URL`    | Public auth base URL (`http://localhost:3001` locally) |
+| Variable             | Purpose                                               |
+| -------------------- | ----------------------------------------------------- |
+| `DATABASE_URL`       | Postgres connection string                            |
+| `BETTER_AUTH_SECRET` | Auth signing secret (≥ 32 chars)                      |
+| `BETTER_AUTH_URL`    | Public auth/API URL (`http://localhost:3001` locally) |
+| `WEB_ORIGIN`         | Frontend origin allowed by CORS and Better Auth       |
+| `VITE_API_URL`       | Public API URL embedded in the frontend build         |
+| `PORT`               | Optional API port; defaults to `3001`                 |
 
 Default Docker DB (from `docker-compose.yml`):
 
