@@ -3,14 +3,13 @@ import { Link } from "react-router";
 import { Button } from "@repo/ui/button";
 import { AppShell } from "@/components/AppShell";
 import { authClient } from "../lib/auth-client";
+import { API_URL } from "../lib/config";
 
 type Item = {
   id: number;
   name: string;
   createdAt: string;
 };
-
-const API_URL = "http://localhost:3001";
 
 export function Home() {
   const { data: session, isPending } = authClient.useSession();
