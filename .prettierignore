@@ -1,7 +1,10 @@
 node_modules
-.turbo
-.astro
 dist
+.next
+build
 .pnpm-store
+*.env
+*.log
 pnpm-lock.yaml
+coverage
 packages/db/drizzle

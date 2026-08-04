@@ -8,10 +8,19 @@
     "check": "turbo run check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint:fix": "eslint . --fix",
+    "lint:strict": "eslint . --max-warnings 0",
+    "typecheck": "turbo run check"
   },
   "lint-staged": {
-    "*": "prettier --write --ignore-unknown"
+    "*.{json,md,css}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.1",
@@ -19,7 +28,10 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.3.0",
     "prettier": "^3.9.6",
-    "turbo": "^2.10.8"
+    "turbo": "^2.10.8",
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.39.5",
+    "typescript-eslint": "^8.65.0"
   },
   "packageManager": "pnpm@11.18.0",
   "engines": {
