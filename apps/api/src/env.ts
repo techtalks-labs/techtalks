@@ -34,11 +34,15 @@ const envSchema = z.object({
   WEB_ORIGIN: originSchema,
 });
 
-const parsedEnv = envSchema.parse(process.env);
+export const parseApiEnv = (input: NodeJS.ProcessEnv) => {
+  const parsedEnv = envSchema.parse(input);
 
-export const env = {
-  betterAuthSecret: parsedEnv.BETTER_AUTH_SECRET,
-  betterAuthUrl: parsedEnv.BETTER_AUTH_URL,
-  port: parsedEnv.PORT,
-  webOrigin: parsedEnv.WEB_ORIGIN,
-} as const;
+  return {
+    betterAuthSecret: parsedEnv.BETTER_AUTH_SECRET,
+    betterAuthUrl: parsedEnv.BETTER_AUTH_URL,
+    port: parsedEnv.PORT,
+    webOrigin: parsedEnv.WEB_ORIGIN,
+  } as const;
+};
+
+export const env = parseApiEnv(process.env);
