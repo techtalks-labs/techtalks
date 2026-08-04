@@ -2,21 +2,25 @@ import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv } from "vite";
+import { z } from "zod";
 
 const envDir = path.resolve(import.meta.dirname, "../..");
 
+const envSchema = z.object({
+  VITE_API_URL: z
+    .string()
+    .trim()
+    .min(1)
+    .url()
+    .refine((value) => {
+      const url = new URL(value);
+      return url.protocol === "http:" || url.protocol === "https:";
+    }, "VITE_API_URL must use http or https"),
+});
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, envDir, "VITE_");
-
-  if (!env.VITE_API_URL) {
-    throw new Error("Missing required environment variable: VITE_API_URL");
-  }
-
-  const apiUrl = new URL(env.VITE_API_URL);
-
-  if (apiUrl.protocol !== "http:" && apiUrl.protocol !== "https:") {
-    throw new Error("VITE_API_URL must use http or https");
-  }
+  envSchema.parse(env);
 
   return {
     envDir,
