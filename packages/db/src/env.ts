@@ -18,8 +18,12 @@ const envSchema = z.object({
     }, "DATABASE_URL must use the postgres or postgresql protocol"),
 });
 
-const parsedEnv = envSchema.parse(process.env);
+export const parseDbEnv = (input: NodeJS.ProcessEnv) => {
+  const parsedEnv = envSchema.parse(input);
 
-export const dbEnv = {
-  databaseUrl: parsedEnv.DATABASE_URL,
-} as const;
+  return {
+    databaseUrl: parsedEnv.DATABASE_URL,
+  } as const;
+};
+
+export const dbEnv = parseDbEnv(process.env);
