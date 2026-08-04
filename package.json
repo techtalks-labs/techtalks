@@ -8,6 +8,8 @@
     "check": "turbo run check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint:fix": "turbo run lint -- --fix",
+    "lint:strict": "turbo run lint -- --max-warnings 0",
     "prepare": "husky"
   },
   "lint-staged": {
