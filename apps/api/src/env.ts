@@ -1,58 +1,44 @@
-type OriginName = "BETTER_AUTH_URL" | "WEB_ORIGIN";
+import { z } from "zod";
 
-function parseOrigin(name: OriginName): string {
-  const value = process.env[name]?.trim();
+const originSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .url()
+  .transform((value, context) => {
+    const url = new URL(value);
 
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      context.addIssue({
+        code: "custom",
+        message: "must use http or https",
+      });
+      return z.NEVER;
+    }
 
-  let url: URL;
+    if (url.pathname !== "/" || url.search || url.hash) {
+      context.addIssue({
+        code: "custom",
+        message: "must be an origin without a path, query, or hash",
+      });
+      return z.NEVER;
+    }
 
-  try {
-    url = new URL(value);
-  } catch {
-    throw new Error(`${name} must be a valid absolute URL`);
-  }
+    return url.origin;
+  });
 
-  if (url.protocol !== "http:" && url.protocol !== "https:") {
-    throw new Error(`${name} must use http or https`);
-  }
+const envSchema = z.object({
+  BETTER_AUTH_SECRET: z.string().min(32),
+  BETTER_AUTH_URL: originSchema,
+  PORT: z.coerce.number().int().min(1).max(65_535).default(3001),
+  WEB_ORIGIN: originSchema,
+});
 
-  if (url.pathname !== "/" || url.search || url.hash) {
-    throw new Error(`${name} must be an origin without a path, query, or hash`);
-  }
-
-  return url.origin;
-}
-
-function parseAuthSecret(): string {
-  const value = process.env.BETTER_AUTH_SECRET;
-
-  if (!value) {
-    throw new Error("Missing required environment variable: BETTER_AUTH_SECRET");
-  }
-
-  if (value.length < 32) {
-    throw new Error("BETTER_AUTH_SECRET must contain at least 32 characters");
-  }
-
-  return value;
-}
-
-function parsePort(): number {
-  const port = Number(process.env.PORT ?? "3001");
-
-  if (!Number.isInteger(port) || port < 1 || port > 65535) {
-    throw new Error("PORT must be an integer between 1 and 65535");
-  }
-
-  return port;
-}
+const parsedEnv = envSchema.parse(process.env);
 
 export const env = {
-  betterAuthSecret: parseAuthSecret(),
-  betterAuthUrl: parseOrigin("BETTER_AUTH_URL"),
-  port: parsePort(),
-  webOrigin: parseOrigin("WEB_ORIGIN"),
+  betterAuthSecret: parsedEnv.BETTER_AUTH_SECRET,
+  betterAuthUrl: parsedEnv.BETTER_AUTH_URL,
+  port: parsedEnv.PORT,
+  webOrigin: parsedEnv.WEB_ORIGIN,
 } as const;
