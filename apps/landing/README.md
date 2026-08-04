@@ -1,8 +1,8 @@
 # @repo/landing
 
-The public landing site for **Tech Talks** — a beginner-friendly developer community built around Friday discussions, mock interviews, and shared reading. Part of the Tech Talks Turborepo monorepo.
+This is the public landing site for **Tech Talks**, the marketing page people hit before they join. Tech Talks runs Friday discussions, mock interviews, and shared reading, and this site is how we tell that story. It lives inside the Tech Talks Turborepo monorepo.
 
-It's a single, static marketing page with a "radio broadcast / signal" theme: an on-air bar, a live mic, an audio carousel, and a crew orbit.
+The whole thing is one static page with a radio-broadcast look: an on-air bar up top, a live mic, an audio carousel, and a crew orbit.
 
 ## Stack
 
@@ -14,15 +14,15 @@ It's a single, static marketing page with a "radio broadcast / signal" theme: an
 | Icons     | `@phosphor-icons/react`, `lucide-react`                      |
 | Fonts     | Geist / Geist Mono, self-hosted via Astro's stable Fonts API |
 
-No database or backend — this app renders to static HTML.
+There's no database or backend here. It builds down to plain static HTML.
 
 ## The page
 
-Everything is one route, [`src/pages/index.astro`](src/pages/index.astro), composed of:
+It's all one route, [`src/pages/index.astro`](src/pages/index.astro). The sections are:
 
-- **Hero** — headline plus a live-mic studio island (`src/signal/LiveMic.tsx`)
+- **Hero** — the headline and a live-mic studio island (`src/signal/LiveMic.tsx`)
 - **Team** — the crew orbit (`src/components/CrewOrbitSection.tsx`)
-- **Events** — a bento of the three formats: Friday discussions, mock interviews, blog reading
+- **Events** — a bento showing the three formats: Friday discussions, mock interviews, blog reading
 - **Friday clips** — an audio carousel (`src/signal/AudioCarousel.tsx`)
 - **Contribute** — the closing "Join the community" call to action
 
@@ -42,14 +42,14 @@ apps/landing/
 
 ## Editing content
 
-Copy and data are centralized so you edit one file, not many layouts:
+The copy and data all live in one place, so you can change what the page says without touching layouts:
 
-- [`src/data/site.ts`](src/data/site.ts) — site meta, `crew`, `sessions`, and `contributions`. Swap names, links, and copy here.
-- [`src/pages/index.astro`](src/pages/index.astro) — the `applicationUrl` and `applicationsPaused` flags at the top control the "Join the community" flow. When paused, the join links open the "applications coming back soon" dialog instead of navigating out.
+- [`src/data/site.ts`](src/data/site.ts) holds the site meta plus the `crew`, `sessions`, and `contributions`. Swap names, links, and copy here.
+- [`src/pages/index.astro`](src/pages/index.astro) has the `applicationUrl` and `applicationsPaused` flags near the top. They drive the "Join the community" flow — while applications are paused, the join links pop the "applications coming back soon" dialog instead of sending people off-site.
 
 ## Commands
 
-Run from this app directory, or from the repo root with `pnpm --filter @repo/landing <script>`:
+Run these from this folder, or from the repo root with `pnpm --filter @repo/landing <script>`:
 
 | Command        | Action                                      |
 | -------------- | ------------------------------------------- |
@@ -59,10 +59,10 @@ Run from this app directory, or from the repo root with `pnpm --filter @repo/lan
 | `pnpm check`   | `astro check` (type + template diagnostics) |
 | `pnpm lint`    | ESLint                                      |
 
-From the monorepo root, `pnpm dev` starts this app alongside the rest.
+Running `pnpm dev` from the monorepo root will start this app along with everything else.
 
 ## Notes
 
-- **Islands:** React components hydrate with `client:load` (mic) or `client:visible` (crew, carousel) — the rest of the page ships as static HTML.
-- **Theme:** light/dark is toggled client-side and persisted in `localStorage` under `tech-talks-theme`.
-- **Tunnels:** `astro.config.mjs` allow-lists ngrok hosts so you can preview the dev server through a tunnel.
+- **Islands:** the React bits hydrate with `client:load` (the mic) or `client:visible` (crew, carousel). Everything else is static HTML.
+- **Theme:** the light/dark toggle runs client-side and remembers your choice in `localStorage` under `tech-talks-theme`.
+- **Tunnels:** `astro.config.mjs` allow-lists ngrok hosts, so you can share the dev server through a tunnel.
