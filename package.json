@@ -10,6 +10,7 @@
     "format:check": "prettier --check .",
     "lint:fix": "turbo run lint -- --fix",
     "lint:strict": "turbo run lint -- --max-warnings 0",
+    "test": "turbo run test",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -21,7 +22,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.3.0",
     "prettier": "^3.9.6",
-    "turbo": "^2.10.8"
+    "turbo": "^2.10.8",
+    "vitest": "^4.1.10"
   },
   "packageManager": "pnpm@11.18.0",
   "engines": {
